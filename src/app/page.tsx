@@ -116,15 +116,16 @@ export default function ShiftCalcPage() {
                 key={shift.id}
                 onClick={() => handleShiftClick(shift)}
                 variant="outline"
-                className="h-auto min-h-[6rem] text-xs p-2 flex flex-col items-center justify-center focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:z-10"
-                aria-label={`إضافة وردية ${shift.code}, ${shift.hours} ساعات, من ${shift.startTime} إلى ${shift.endTime}`}
+                className="h-auto min-h-[3.5rem] text-xs p-1 flex flex-col items-center justify-center focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:z-10"
+                aria-label={`إضافة وردية ${shift.code}, من ${shift.startTime} إلى ${shift.endTime}`}
               >
                 {shift.icon && (
-                  <span className="text-primary mb-2">
-                    {shift.icon}
+                  <span className="text-primary mb-0.5">
+                    {React.cloneElement(shift.icon as React.ReactElement, { className: "h-4 w-4" })}
                   </span>
                 )}
-                <span className="text-muted-foreground text-xs text-center whitespace-nowrap">{shift.startTime} - {shift.endTime}</span>
+                <span className="font-bold text-xs text-foreground">{shift.code}</span>
+                <span className="text-muted-foreground text-[0.65rem] leading-tight text-center whitespace-nowrap">{shift.startTime} - {shift.endTime}</span>
               </Button>
             ))}
           </div>
