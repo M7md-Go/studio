@@ -45,19 +45,32 @@ export default function ShiftCalcPage() {
   const [totalHours, setTotalHours] = useState<number>(0);
   const [history, setHistory] = useState<Shift[][]>([]);
 
+  // Calculator state
+  const [displayValue, setDisplayValue] = useState<string>("0");
+  const [operand1, setOperand1] = useState<number | null>(null);
+  const [operator, setOperator] = useState<string | null>(null);
+  const [waitingForOperand2, setWaitingForOperand2] = useState<boolean>(false);
+
   useEffect(() => {
     const newTotal = selectedShifts.reduce((acc, curr) => acc + curr.hours, 0);
     setTotalHours(newTotal);
+    // When totalHours changes due to shift selection/deselection, reset calculator to show new total
+    setDisplayValue(newTotal.toString());
+    setOperand1(null);
+    setOperator(null);
+    setWaitingForOperand2(false);
   }, [selectedShifts]);
 
   const handleShiftClick = (shift: Shift) => {
     setHistory(prevHistory => [...prevHistory, selectedShifts]);
     setSelectedShifts(prevSelected => [...prevSelected, shift]);
+    // useEffect will handle calculator reset
   };
 
   const handleClear = () => {
     setHistory(prevHistory => [...prevHistory, selectedShifts]);
     setSelectedShifts([]);
+    // useEffect will handle calculator reset based on selectedShifts becoming empty
   };
 
   const handleUndo = () => {
@@ -65,9 +78,121 @@ export default function ShiftCalcPage() {
       const previousState = history[history.length - 1];
       setSelectedShifts(previousState);
       setHistory(prevHistory => prevHistory.slice(0, -1));
+      // useEffect will handle calculator reset based on selectedShifts changing
     }
   };
+
+  const performCalculation = (): number | "Error" => {
+    const prev = operand1;
+    const current = parseFloat(displayValue);
+
+    if (prev === null || operator === null || isNaN(current)) {
+      return "Error";
+    }
+
+    switch (operator) {
+      case '+':
+        return prev + current;
+      case '-':
+        return prev - current;
+      case '*':
+        return prev * current;
+      case '/':
+        if (current === 0) {
+          return "Error";
+        }
+        return prev / current;
+      default:
+        return "Error";
+    }
+  };
+
+  const handleNumberClick = (number: string) => {
+    if (displayValue === "Error") {
+      setDisplayValue(number);
+      setWaitingForOperand2(false); // If it was error, new number starts fresh
+      return;
+    }
+    if (waitingForOperand2) {
+      setDisplayValue(number);
+      setWaitingForOperand2(false);
+    } else {
+      setDisplayValue(prev => (prev === "0" ? number : prev + number));
+    }
+  };
+
+  const handleDecimalClick = () => {
+    if (displayValue === "Error") {
+      setDisplayValue("0.");
+      setWaitingForOperand2(false);
+      return;
+    }
+    if (waitingForOperand2) {
+      setDisplayValue("0.");
+      setWaitingForOperand2(false);
+    } else if (!displayValue.includes(".")) {
+      setDisplayValue(prev => prev + ".");
+    }
+  };
+
+  const handleOperatorClick = (nextOperator: string) => {
+    if (displayValue === "Error") return;
+
+    if (operand1 !== null && operator !== null && !waitingForOperand2) {
+      const result = performCalculation();
+      if (result === "Error") {
+        setDisplayValue("Error");
+        setOperand1(null);
+        setOperator(null);
+        setWaitingForOperand2(false);
+        return;
+      }
+      setDisplayValue(result.toString());
+      setOperand1(result);
+    } else {
+       setOperand1(parseFloat(displayValue));
+    }
+    
+    setOperator(nextOperator);
+    setWaitingForOperand2(true);
+  };
+
+  const handleEqualsClick = () => {
+    if (operand1 === null || operator === null || waitingForOperand2 || displayValue === "Error") {
+      return;
+    }
+
+    const result = performCalculation();
+    if (result === "Error") {
+      setDisplayValue("Error");
+    } else {
+      setDisplayValue(result.toString());
+    }
+    setOperand1(null); // Reset operand1, calculation is complete. Result is on display.
+                      // If we want chaining like 2+3=5, then +1=6, setOperand1(result)
+    setOperator(null);
+    setWaitingForOperand2(false);
+  };
   
+  const calculatorButtons = [
+    { label: '7', action: () => handleNumberClick('7'), type: 'number' , aria: 'رقم سبعة'},
+    { label: '8', action: () => handleNumberClick('8'), type: 'number' , aria: 'رقم ثمانية'},
+    { label: '9', action: () => handleNumberClick('9'), type: 'number' , aria: 'رقم تسعة'},
+    { label: '÷', action: () => handleOperatorClick('/'), type: 'operator', aria: 'عملية القسمة' },
+    { label: '4', action: () => handleNumberClick('4'), type: 'number', aria: 'رقم اربعة' },
+    { label: '5', action: () => handleNumberClick('5'), type: 'number', aria: 'رقم خمسة' },
+    { label: '6', action: () => handleNumberClick('6'), type: 'number', aria: 'رقم ستة' },
+    { label: '×', action: () => handleOperatorClick('*'), type: 'operator', aria: 'عملية الضرب' },
+    { label: '1', action: () => handleNumberClick('1'), type: 'number', aria: 'رقم واحد' },
+    { label: '2', action: () => handleNumberClick('2'), type: 'number', aria: 'رقم اثنان' },
+    { label: '3', action: () => handleNumberClick('3'), type: 'number', aria: 'رقم ثلاثة' },
+    { label: '-', action: () => handleOperatorClick('-'), type: 'operator', aria: 'عملية الطرح' },
+    { label: '0', action: () => handleNumberClick('0'), type: 'number', aria: 'رقم صفر' },
+    { label: '.', action: handleDecimalClick, type: 'number', aria: 'فاصلة عشرية' },
+    { label: '=', action: handleEqualsClick, type: 'equals', aria: 'يساوي' },
+    { label: '+', action: () => handleOperatorClick('+'), type: 'operator', aria: 'عملية الجمع' },
+  ];
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-background selection:bg-primary selection:text-primary-foreground">
       <Card className="w-full max-w-md shadow-xl rounded-xl overflow-hidden">
@@ -85,8 +210,10 @@ export default function ShiftCalcPage() {
               }
             </div>
             <div className="text-4xl font-bold text-foreground" aria-live="polite">
-              {totalHours.toLocaleString('ar-SA', { minimumFractionDigits: 0, maximumFractionDigits: 1 })}
-              <span className="text-xl text-muted-foreground ml-1">ساعة</span>
+              {displayValue === "Error" 
+                ? <span className="text-destructive">خطأ</span> 
+                : `${parseFloat(displayValue === "" ? "0" : displayValue).toLocaleString('ar-SA', { minimumFractionDigits: 0, maximumFractionDigits: 4 })}`}
+              {displayValue !== "Error" && <span className="text-xl text-muted-foreground ml-1">ساعة</span>}
             </div>
           </div>
 
@@ -110,25 +237,46 @@ export default function ShiftCalcPage() {
               onClick={handleClear} 
               className="h-10 text-base" 
               variant="destructive"
-              aria-label="مسح جميع الورديات"
+              aria-label="مسح جميع الورديات والمدخلات"
             >
-              <Trash2 className="mr-2 h-4 w-4" /> مسح
+              <Trash2 className="mr-2 h-4 w-4" /> مسح الكل
             </Button>
             <Button 
               onClick={handleUndo} 
               className="h-10 text-base" 
               variant="secondary" 
               disabled={history.length === 0}
-              aria-label="تراجع عن آخر إضافة"
+              aria-label="تراجع عن آخر إضافة وردية"
             >
-              <Undo2 className="mr-2 h-4 w-4" /> تراجع
+              <Undo2 className="mr-2 h-4 w-4" /> تراجع وردية
             </Button>
           </div>
+
+          {/* Calculator Buttons */}
+          <div className="pt-2 space-y-2">
+            {Array.from({ length: 4 }).map((_, rowIndex) => (
+              <div key={`calc-row-${rowIndex}`} className="grid grid-cols-4 gap-2">
+                {calculatorButtons.slice(rowIndex * 4, rowIndex * 4 + 4).map(btn => (
+                  <Button
+                    key={btn.label}
+                    onClick={btn.action}
+                    variant={btn.type === 'operator' ? 'secondary' : (btn.type === 'equals' ? 'default' : 'outline')}
+                    className="h-12 text-lg font-semibold focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:z-10"
+                    aria-label={btn.aria}
+                  >
+                    {btn.label}
+                  </Button>
+                ))}
+              </div>
+            ))}
+          </div>
+
         </CardContent>
         <CardFooter className="text-xs text-muted-foreground text-center block p-3 border-t border-border bg-card">
-          اضغط على أزرار الورديات لإضافة الساعات. يتم تحديث الإجمالي تلقائيًا.
+          اضغط على أزرار الورديات لإضافة الساعات. استخدم الآلة الحاسبة لإجراء عمليات حسابية على الإجمالي.
         </CardFooter>
       </Card>
     </main>
   );
 }
+
