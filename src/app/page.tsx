@@ -5,7 +5,7 @@ import type { ReactNode } from 'react';
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Clock3, Moon, Sun, Trash2, Undo2, Briefcase, Building2 } from 'lucide-react'; // Removed Users2 as it's not used
+import { Clock3, Moon, Sun, Trash2, Undo2, Briefcase, Building2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 // Helper component for Sunrise icon as Lucide doesn't have it directly
@@ -34,26 +34,26 @@ type Shift = {
 };
 
 const predefinedShifts: Shift[] = [
-  { id: 'm', code: 'M', hours: 6, startTime: '7am', endTime: '1pm', icon: <Sunrise className="h-5 w-5" /> },
-  { id: 'm1', code: 'M1', hours: 6, startTime: '8am', endTime: '2pm', icon: <Sunrise className="h-5 w-5" /> },
-  { id: 'm2', code: 'M2', hours: 8, startTime: '8am', endTime: '3pm', icon: <Sunrise className="h-5 w-5 opacity-80" /> },
-  { id: 'm3', code: 'M3', hours: 6, startTime: '9am', endTime: '3pm', icon: <Sunrise className="h-5 w-5" /> },
-  { id: 'm4', code: 'M4', hours: 7, startTime: '9am', endTime: '4pm', icon: <Sunrise className="h-5 w-5 opacity-90" /> },
-  { id: 'm5', code: 'M5', hours: 8, startTime: '8am', endTime: '4pm', icon: <Sunrise className="h-5 w-5 opacity-80" /> },
-  { id: 'm6', code: 'M6', hours: 7, startTime: '7am', endTime: '2pm', icon: <Sunrise className="h-5 w-5 opacity-90" /> },
-  { id: 'a1', code: 'A1', hours: 6, startTime: '2pm', endTime: '8pm', icon: <Sun className="h-5 w-5" /> },
-  { id: 'a2', code: 'A2', hours: 6, startTime: '3pm', endTime: '9pm', icon: <Sun className="h-5 w-5" /> },
-  { id: 'x1', code: 'X1', hours: 9, startTime: '8am', endTime: '5pm', icon: <Briefcase className="h-5 w-5" /> },
-  { id: 'x2', code: 'X2', hours: 9, startTime: '9am', endTime: '6pm', icon: <Briefcase className="h-5 w-5" /> },
-  { id: 'x3', code: 'X3', hours: 9, startTime: '7am', endTime: '4pm', icon: <Briefcase className="h-5 w-5" /> },
-  { id: 'x4', code: 'X4', hours: 9, startTime: '11am', endTime: '8pm', icon: <Briefcase className="h-5 w-5" /> },
-  { id: 'l1', code: 'L1', hours: 12, startTime: '8am', endTime: '8pm', icon: <Clock3 className="h-5 w-5" /> },
-  { id: 'l2', code: 'L2', hours: 12, startTime: '9am', endTime: '9pm', icon: <Clock3 className="h-5 w-5" /> },
-  { id: 'l3', code: 'L3', hours: 12, startTime: '7am', endTime: '7pm', icon: <Clock3 className="h-5 w-5" /> },
-  { id: 'n1', code: 'N1', hours: 12, startTime: '8pm', endTime: '8am', icon: <Moon className="h-5 w-5" /> },
-  { id: 'n2', code: 'N2', hours: 12, startTime: '9pm', endTime: '9am', icon: <Moon className="h-5 w-5" /> },
-  { id: 'n3', code: 'N3', hours: 12, startTime: '7pm', endTime: '7am', icon: <Moon className="h-5 w-5" /> },
-  { id: 'd', code: 'D', hours: 9, startTime: '8am', endTime: '5pm', icon: <Building2 className="h-5 w-5" /> },
+  { id: 'm', code: 'M', hours: 6, startTime: '7am', endTime: '1pm', icon: <Sunrise className="h-8 w-8" /> },
+  { id: 'm1', code: 'M1', hours: 6, startTime: '8am', endTime: '2pm', icon: <Sunrise className="h-8 w-8" /> },
+  { id: 'm2', code: 'M2', hours: 8, startTime: '8am', endTime: '3pm', icon: <Sunrise className="h-8 w-8 opacity-80" /> },
+  { id: 'm3', code: 'M3', hours: 6, startTime: '9am', endTime: '3pm', icon: <Sunrise className="h-8 w-8" /> },
+  { id: 'm4', code: 'M4', hours: 7, startTime: '9am', endTime: '4pm', icon: <Sunrise className="h-8 w-8 opacity-90" /> },
+  { id: 'm5', code: 'M5', hours: 8, startTime: '8am', endTime: '4pm', icon: <Sunrise className="h-8 w-8 opacity-80" /> },
+  { id: 'm6', code: 'M6', hours: 7, startTime: '7am', endTime: '2pm', icon: <Sunrise className="h-8 w-8 opacity-90" /> },
+  { id: 'a1', code: 'A1', hours: 6, startTime: '2pm', endTime: '8pm', icon: <Sun className="h-8 w-8" /> },
+  { id: 'a2', code: 'A2', hours: 6, startTime: '3pm', endTime: '9pm', icon: <Sun className="h-8 w-8" /> },
+  { id: 'x1', code: 'X1', hours: 9, startTime: '8am', endTime: '5pm', icon: <Briefcase className="h-8 w-8" /> },
+  { id: 'x2', code: 'X2', hours: 9, startTime: '9am', endTime: '6pm', icon: <Briefcase className="h-8 w-8" /> },
+  { id: 'x3', code: 'X3', hours: 9, startTime: '7am', endTime: '4pm', icon: <Briefcase className="h-8 w-8" /> },
+  { id: 'x4', code: 'X4', hours: 9, startTime: '11am', endTime: '8pm', icon: <Briefcase className="h-8 w-8" /> },
+  { id: 'l1', code: 'L1', hours: 12, startTime: '8am', endTime: '8pm', icon: <Clock3 className="h-8 w-8" /> },
+  { id: 'l2', code: 'L2', hours: 12, startTime: '9am', endTime: '9pm', icon: <Clock3 className="h-8 w-8" /> },
+  { id: 'l3', code: 'L3', hours: 12, startTime: '7am', endTime: '7pm', icon: <Clock3 className="h-8 w-8" /> },
+  { id: 'n1', code: 'N1', hours: 12, startTime: '8pm', endTime: '8am', icon: <Moon className="h-8 w-8" /> },
+  { id: 'n2', code: 'N2', hours: 12, startTime: '9pm', endTime: '9am', icon: <Moon className="h-8 w-8" /> },
+  { id: 'n3', code: 'N3', hours: 12, startTime: '7pm', endTime: '7am', icon: <Moon className="h-8 w-8" /> },
+  { id: 'd', code: 'D', hours: 9, startTime: '8am', endTime: '5pm', icon: <Building2 className="h-8 w-8" /> },
 ];
 
 
@@ -116,13 +116,15 @@ export default function ShiftCalcPage() {
                 key={shift.id}
                 onClick={() => handleShiftClick(shift)}
                 variant="outline"
-                className="h-auto min-h-[7rem] text-xs p-1 flex flex-col items-center justify-center focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:z-10"
+                className="h-auto min-h-[6rem] text-xs p-2 flex flex-col items-center justify-center focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:z-10"
                 aria-label={`إضافة وردية ${shift.code}, ${shift.hours} ساعات, من ${shift.startTime} إلى ${shift.endTime}`}
               >
-                {shift.icon && <span className="text-primary mb-1">{shift.icon}</span>}
-                <span className="font-semibold text-sm">{shift.code}</span>
-                <span className="text-muted-foreground">{shift.hours} س</span>
-                <span className="text-muted-foreground text-[0.65rem] whitespace-nowrap">{shift.startTime} - {shift.endTime}</span>
+                {shift.icon && (
+                  <span className="text-primary mb-2">
+                    {shift.icon}
+                  </span>
+                )}
+                <span className="text-muted-foreground text-xs text-center whitespace-nowrap">{shift.startTime} - {shift.endTime}</span>
               </Button>
             ))}
           </div>
