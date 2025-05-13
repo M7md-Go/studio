@@ -1,0 +1,303 @@
+:root {
+    --background-hsl: 0 0% 94.1%; /* Light gray #F0F0F0 */
+    --foreground-hsl: 0 0% 20%; /* Dark gray #333333 */
+    --muted-hsl: 0 0% 87.8%; /* Slightly darker than background: #E0E0E0 */
+    --muted-foreground-hsl: 0 0% 40%; /* Darker gray for muted text #666666 */
+    --card-hsl: 0 0% 100%; /* White cards */
+    --card-foreground-hsl: 0 0% 20%; /* Dark gray text on cards */
+    --primary-hsl: 210 100% 50%; /* Blue #007AFF */
+    --primary-foreground-hsl: 0 0% 100%; /* White text on blue */
+    --secondary-hsl: 0 0% 87.8%; /* #E0E0E0 */
+    --secondary-foreground-hsl: 0 0% 20%; /* Dark gray text on light gray buttons */
+    --accent-hsl: 210 100% 50%; /* Blue #007AFF */
+    --accent-foreground-hsl: 0 0% 100%; /* White text on blue */
+    --destructive-hsl: 0 84.2% 60.2%; /* Default red */
+    --destructive-foreground-hsl: 0 0% 98%; /* Default light text for destructive */
+    --border-hsl: 0 0% 80%; /* #CCCCCC, for outlines */
+    --input-hsl: 0 0% 80%; /* #CCCCCC */
+    --ring-hsl: 210 100% 50%; /* Blue for focus rings */
+    --radius: 0.5rem;
+
+    --background: hsl(var(--background-hsl));
+    --foreground: hsl(var(--foreground-hsl));
+    --muted: hsl(var(--muted-hsl));
+    --muted-foreground: hsl(var(--muted-foreground-hsl));
+    --card: hsl(var(--card-hsl));
+    --card-foreground: hsl(var(--card-foreground-hsl));
+    --primary: hsl(var(--primary-hsl));
+    --primary-foreground: hsl(var(--primary-foreground-hsl));
+    --secondary: hsl(var(--secondary-hsl));
+    --secondary-foreground: hsl(var(--secondary-foreground-hsl));
+    --accent: hsl(var(--accent-hsl));
+    --accent-foreground: hsl(var(--accent-foreground-hsl));
+    --destructive: hsl(var(--destructive-hsl));
+    --destructive-foreground: hsl(var(--destructive-foreground-hsl));
+    --border: hsl(var(--border-hsl));
+    --input: hsl(var(--input-hsl));
+    --ring: hsl(var(--ring-hsl));
+}
+
+/* Add dark mode if needed, for now sticking to light theme from globals.css */
+
+* {
+    box-sizing: border-box;
+    border-color: var(--border);
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background-color: var(--background);
+    color: var(--foreground);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.main-container {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.card {
+    width: 100%;
+    max-width: 480px; /* max-w-md is 28rem = 448px, using a bit more for calculator */
+    background-color: var(--card);
+    color: var(--card-foreground);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); /* shadow-xl */
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.card-header {
+    background-color: var(--card); /* In ShadCN, card header often inherits card bg */
+    border-bottom: 1px solid var(--border);
+    padding: 1rem;
+}
+
+.card-title {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: 700;
+    text-align: center;
+    color: var(--primary);
+}
+
+.card-content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* space-y-4 */
+}
+
+.display-area {
+    padding: 0.75rem; /* p-3 */
+    border-radius: 0.375rem; /* rounded-lg */
+    background-color: var(--muted);
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.05); /* shadow-inner */
+}
+
+.selected-shifts-display {
+    font-size: 0.75rem; /* text-xs */
+    color: var(--muted-foreground);
+    width: 100%;
+    text-align: right;
+    word-break: break-all;
+    height: 1.5rem; /* h-6 */
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.selected-shifts-display .italic {
+    font-style: italic;
+}
+
+.selected-shifts-display .shift-badge {
+    display: inline-block;
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+    padding: 0.125rem 0.5rem; /* py-0.5 px-2 - approx */
+    border-radius: 9999px; /* rounded-full */
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.75rem;
+}
+
+.calculator-display {
+    font-size: 2.25rem; /* text-4xl */
+    font-weight: 700;
+    color: var(--foreground);
+    direction: ltr; /* For numbers */
+    text-align: right; /* Align numbers to the right */
+    width: 100%;
+}
+.calculator-display .error-text {
+    color: var(--destructive);
+}
+.calculator-display .unit-text {
+    font-size: 1.25rem; /* text-xl */
+    color: var(--muted-foreground);
+    margin-left: 0.25rem;
+}
+
+
+.grid {
+    display: grid;
+    gap: 0.5rem; /* gap-2 */
+}
+
+.grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    border-radius: 0.375rem; /* rounded-md */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    padding: 0.5rem 1rem; /* h-10 px-4 py-2 */
+    height: 2.5rem;
+    border: 1px solid transparent;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--ring); /* focus:ring-2 focus:ring-primary focus:ring-offset-2 */
+}
+.button:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.shift-button {
+    background-color: transparent;
+    border-color: var(--input);
+    color: var(--foreground);
+    height: auto;
+    min-height: 2.5rem;
+    font-size: 0.75rem; /* text-xs */
+    padding: 0.25rem; /* p-1 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.shift-button:hover {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+}
+.shift-button .shift-code {
+    font-weight: bold;
+    font-size: 0.875rem; /* text-sm */
+    color: var(--foreground); /* Explicitly set to ensure visibility on hover */
+}
+.shift-button:hover .shift-code {
+    color: var(--accent-foreground);
+}
+
+.shift-button .shift-time {
+    color: var(--muted-foreground);
+    font-size: 0.6rem;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+}
+.shift-button:hover .shift-time {
+    color: var(--accent-foreground);
+}
+
+
+.action-buttons-grid {
+    padding-top: 0.5rem;
+}
+.action-buttons-grid .button {
+    height: 2.5rem; /* h-10 */
+    font-size: 1rem; /* text-base */
+}
+
+.destructive-button {
+    background-color: var(--destructive);
+    color: var(--destructive-foreground);
+}
+.destructive-button:hover {
+    background-color: hsl(var(--destructive-hsl) / 0.9);
+}
+
+.secondary-button {
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+}
+.secondary-button:hover {
+    background-color: hsl(var(--secondary-hsl) / 0.8);
+}
+
+.default-button { /* For equals button */
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+}
+.default-button:hover {
+    background-color: hsl(var(--primary-hsl) / 0.9);
+}
+
+.outline-button { /* For number buttons */
+    background-color: transparent;
+    border-color: var(--input);
+}
+.outline-button:hover {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+}
+
+
+.calculator-buttons-grid {
+    padding-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* space-y-2 */
+}
+.calculator-buttons-grid .button {
+    height: 3rem; /* h-12 */
+    font-size: 1.125rem; /* text-lg */
+    font-weight: 600; /* font-semibold */
+}
+
+
+.card-footer {
+    font-size: 0.75rem; /* text-xs */
+    color: var(--muted-foreground);
+    text-align: center;
+    display: block;
+    padding: 0.75rem; /* p-3 */
+    border-top: 1px solid var(--border);
+    background-color: var(--card);
+}
+
+/* Scrollbar for selected shifts (optional, very basic) */
+.selected-shifts-display::-webkit-scrollbar {
+    height: 4px;
+}
+.selected-shifts-display::-webkit-scrollbar-track {
+    background: transparent;
+}
+.selected-shifts-display::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary-hsl) / 0.5);
+    border-radius: 2px;
+}
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShiftCalc - Work Hours Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="main-container">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-title">حاسبة الورديات</h1>
+            </div>
+            <div class="card-content">
+                <div class="display-area">
+                    <div id="selected-shifts-display" class="selected-shifts-display">
+                        <span class="italic">لم يتم اختيار ورديات</span>
+                    </div>
+                    <div id="calculator-display" class="calculator-display" aria-live="polite">
+                        0<span class="unit-text">ساعة</span>
+                    </div>
+                </div>
+
+                <div id="shift-buttons-grid" class="grid grid-cols-4">
+                    <!-- Shift buttons will be populated by JavaScript -->
+                </div>
+                
+                <div class="grid grid-cols-2 action-buttons-grid">
+                    <button id="clear-button" class="button destructive-button" aria-label="مسح جميع الورديات والمدخلات">
+                        مسح الكل
+                    </button>
+                    <button id="undo-button" class="button secondary-button" aria-label="تراجع عن آخر إضافة وردية" disabled>
+                        تراجع وردية
+                    </button>
+                </div>
+
+                <div id="calculator-buttons-grid" class="calculator-buttons-grid">
+                    <!-- Calculator buttons will be populated by JavaScript -->
+                </div>
+
+            </div>
+            <div class="card-footer">
+                اضغط على أزرار الورديات لإضافة الساعات. استخدم الآلة الحاسبة لإجراء عمليات حسابية على الإجمالي.
+            </div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
