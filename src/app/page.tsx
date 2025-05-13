@@ -5,24 +5,8 @@ import type { ReactNode } from 'react';
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Clock3, Moon, Sun, Trash2, Undo2, Briefcase, Building2 } from 'lucide-react';
+import { Trash2, Undo2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-
-// Helper component for Sunrise icon as Lucide doesn't have it directly
-const Sunrise = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <path d="M12 2L12 6"/>
-    <path d="M6 12L2 12"/>
-    <path d="M18 12L22 12"/>
-    <path d="M12 18L12 22"/>
-    <path d="M4.93 4.93L7.76 7.76"/>
-    <path d="M16.24 16.24L19.07 19.07"/>
-    <path d="M19.07 4.93L16.24 7.76"/>
-    <path d="M7.76 16.24L4.93 19.07"/>
-    <path d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"/>
-    <path d="M2 18H22"/>
-  </svg>
-);
 
 type Shift = {
   id: string;
@@ -30,30 +14,29 @@ type Shift = {
   hours: number;
   startTime: string;
   endTime: string;
-  icon?: ReactNode;
 };
 
 const predefinedShifts: Shift[] = [
-  { id: 'm', code: 'M', hours: 6, startTime: '7am', endTime: '1pm', icon: <Sunrise className="h-8 w-8" /> },
-  { id: 'm1', code: 'M1', hours: 6, startTime: '8am', endTime: '2pm', icon: <Sunrise className="h-8 w-8" /> },
-  { id: 'm2', code: 'M2', hours: 8, startTime: '8am', endTime: '3pm', icon: <Sunrise className="h-8 w-8 opacity-80" /> },
-  { id: 'm3', code: 'M3', hours: 6, startTime: '9am', endTime: '3pm', icon: <Sunrise className="h-8 w-8" /> },
-  { id: 'm4', code: 'M4', hours: 7, startTime: '9am', endTime: '4pm', icon: <Sunrise className="h-8 w-8 opacity-90" /> },
-  { id: 'm5', code: 'M5', hours: 8, startTime: '8am', endTime: '4pm', icon: <Sunrise className="h-8 w-8 opacity-80" /> },
-  { id: 'm6', code: 'M6', hours: 7, startTime: '7am', endTime: '2pm', icon: <Sunrise className="h-8 w-8 opacity-90" /> },
-  { id: 'a1', code: 'A1', hours: 6, startTime: '2pm', endTime: '8pm', icon: <Sun className="h-8 w-8" /> },
-  { id: 'a2', code: 'A2', hours: 6, startTime: '3pm', endTime: '9pm', icon: <Sun className="h-8 w-8" /> },
-  { id: 'x1', code: 'X1', hours: 9, startTime: '8am', endTime: '5pm', icon: <Briefcase className="h-8 w-8" /> },
-  { id: 'x2', code: 'X2', hours: 9, startTime: '9am', endTime: '6pm', icon: <Briefcase className="h-8 w-8" /> },
-  { id: 'x3', code: 'X3', hours: 9, startTime: '7am', endTime: '4pm', icon: <Briefcase className="h-8 w-8" /> },
-  { id: 'x4', code: 'X4', hours: 9, startTime: '11am', endTime: '8pm', icon: <Briefcase className="h-8 w-8" /> },
-  { id: 'l1', code: 'L1', hours: 12, startTime: '8am', endTime: '8pm', icon: <Clock3 className="h-8 w-8" /> },
-  { id: 'l2', code: 'L2', hours: 12, startTime: '9am', endTime: '9pm', icon: <Clock3 className="h-8 w-8" /> },
-  { id: 'l3', code: 'L3', hours: 12, startTime: '7am', endTime: '7pm', icon: <Clock3 className="h-8 w-8" /> },
-  { id: 'n1', code: 'N1', hours: 12, startTime: '8pm', endTime: '8am', icon: <Moon className="h-8 w-8" /> },
-  { id: 'n2', code: 'N2', hours: 12, startTime: '9pm', endTime: '9am', icon: <Moon className="h-8 w-8" /> },
-  { id: 'n3', code: 'N3', hours: 12, startTime: '7pm', endTime: '7am', icon: <Moon className="h-8 w-8" /> },
-  { id: 'd', code: 'D', hours: 9, startTime: '8am', endTime: '5pm', icon: <Building2 className="h-8 w-8" /> },
+  { id: 'm', code: 'M', hours: 6, startTime: '7am', endTime: '1pm' },
+  { id: 'm1', code: 'M1', hours: 6, startTime: '8am', endTime: '2pm' },
+  { id: 'm2', code: 'M2', hours: 8, startTime: '8am', endTime: '3pm' },
+  { id: 'm3', code: 'M3', hours: 6, startTime: '9am', endTime: '3pm' },
+  { id: 'm4', code: 'M4', hours: 7, startTime: '9am', endTime: '4pm' },
+  { id: 'm5', code: 'M5', hours: 8, startTime: '8am', endTime: '4pm' },
+  { id: 'm6', code: 'M6', hours: 7, startTime: '7am', endTime: '2pm' },
+  { id: 'a1', code: 'A1', hours: 6, startTime: '2pm', endTime: '8pm' },
+  { id: 'a2', code: 'A2', hours: 6, startTime: '3pm', endTime: '9pm' },
+  { id: 'x1', code: 'X1', hours: 9, startTime: '8am', endTime: '5pm' },
+  { id: 'x2', code: 'X2', hours: 9, startTime: '9am', endTime: '6pm' },
+  { id: 'x3', code: 'X3', hours: 9, startTime: '7am', endTime: '4pm' },
+  { id: 'x4', code: 'X4', hours: 9, startTime: '11am', endTime: '8pm' },
+  { id: 'l1', code: 'L1', hours: 12, startTime: '8am', endTime: '8pm' },
+  { id: 'l2', code: 'L2', hours: 12, startTime: '9am', endTime: '9pm' },
+  { id: 'l3', code: 'L3', hours: 12, startTime: '7am', endTime: '7pm' },
+  { id: 'n1', code: 'N1', hours: 12, startTime: '8pm', endTime: '8am' },
+  { id: 'n2', code: 'N2', hours: 12, startTime: '9pm', endTime: '9am' },
+  { id: 'n3', code: 'N3', hours: 12, startTime: '7pm', endTime: '7am' },
+  { id: 'd', code: 'D', hours: 9, startTime: '8am', endTime: '5pm' },
 ];
 
 
@@ -116,16 +99,11 @@ export default function ShiftCalcPage() {
                 key={shift.id}
                 onClick={() => handleShiftClick(shift)}
                 variant="outline"
-                className="h-auto min-h-[3.5rem] text-xs p-1 flex flex-col items-center justify-center focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:z-10"
+                className="h-auto min-h-[2.8rem] text-xs p-1 flex flex-col items-center justify-center focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:z-10"
                 aria-label={`إضافة وردية ${shift.code}, من ${shift.startTime} إلى ${shift.endTime}`}
               >
-                {shift.icon && (
-                  <span className="text-primary mb-0.5">
-                    {React.cloneElement(shift.icon as React.ReactElement, { className: "h-4 w-4" })}
-                  </span>
-                )}
-                <span className="font-bold text-xs text-foreground">{shift.code}</span>
-                <span className="text-muted-foreground text-[0.65rem] leading-tight text-center whitespace-nowrap">{shift.startTime} - {shift.endTime}</span>
+                <span className="font-bold text-sm text-foreground">{shift.code}</span>
+                <span className="text-muted-foreground text-[0.6rem] leading-tight text-center whitespace-nowrap">{shift.startTime} - {shift.endTime}</span>
               </Button>
             ))}
           </div>
