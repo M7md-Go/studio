@@ -4,7 +4,7 @@
 import type { ReactNode } from 'react';
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Trash2, Undo2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
@@ -19,7 +19,7 @@ type Shift = {
 const predefinedShifts: Shift[] = [
   { id: 'm', code: 'M', hours: 6, startTime: '7am', endTime: '1pm' },
   { id: 'm1', code: 'M1', hours: 6, startTime: '8am', endTime: '2pm' },
-  { id: 'm2', code: 'M2', hours: 7, startTime: '8am', endTime: '3pm' }, // Updated hours from 8 to 7
+  { id: 'm2', code: 'M2', hours: 7, startTime: '8am', endTime: '3pm' },
   { id: 'm3', code: 'M3', hours: 6, startTime: '9am', endTime: '3pm' },
   { id: 'm4', code: 'M4', hours: 7, startTime: '9am', endTime: '4pm' },
   { id: 'm5', code: 'M5', hours: 8, startTime: '8am', endTime: '4pm' },
@@ -73,9 +73,6 @@ export default function ShiftCalcPage() {
       <Card className="w-full max-w-md shadow-xl rounded-xl overflow-hidden">
         <CardHeader className="bg-card border-b border-border p-4">
           <CardTitle className="text-2xl font-bold text-center text-primary">حاسبة الورديات</CardTitle>
-          <CardDescription className="text-center text-muted-foreground text-sm">
-            احسب إجمالي ساعات عملك بسهولة
-          </CardDescription>
         </CardHeader>
         <CardContent className="p-4 space-y-4">
           <div className="p-3 rounded-lg bg-muted min-h-[80px] flex flex-col justify-between items-center shadow-inner">
