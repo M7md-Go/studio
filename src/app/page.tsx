@@ -19,7 +19,7 @@ type Shift = {
 const predefinedShifts: Shift[] = [
   { id: 'm', code: 'M', hours: 6, startTime: '7am', endTime: '1pm' },
   { id: 'm1', code: 'M1', hours: 6, startTime: '8am', endTime: '2pm' },
-  { id: 'm2', code: 'M2', hours: 8, startTime: '8am', endTime: '3pm' },
+  { id: 'm2', code: 'M2', hours: 7, startTime: '8am', endTime: '3pm' }, // Updated hours from 8 to 7
   { id: 'm3', code: 'M3', hours: 6, startTime: '9am', endTime: '3pm' },
   { id: 'm4', code: 'M4', hours: 7, startTime: '9am', endTime: '4pm' },
   { id: 'm5', code: 'M5', hours: 8, startTime: '8am', endTime: '4pm' },
@@ -99,7 +99,7 @@ export default function ShiftCalcPage() {
                 key={shift.id}
                 onClick={() => handleShiftClick(shift)}
                 variant="outline"
-                className="h-auto min-h-[2.8rem] text-xs p-1 flex flex-col items-center justify-center focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:z-10"
+                className="h-auto min-h-[2.5rem] text-xs p-1 flex flex-col items-center justify-center focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:z-10"
                 aria-label={`إضافة وردية ${shift.code}, من ${shift.startTime} إلى ${shift.endTime}`}
               >
                 <span className="font-bold text-sm text-foreground">{shift.code}</span>
@@ -135,4 +135,3 @@ export default function ShiftCalcPage() {
     </main>
   );
 }
-
