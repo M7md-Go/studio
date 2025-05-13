@@ -93,7 +93,7 @@ export default function ShiftCalcPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+          <div className="grid grid-cols-4 gap-2">
             {predefinedShifts.map(shift => (
               <Button
                 key={shift.id}
@@ -111,7 +111,7 @@ export default function ShiftCalcPage() {
           <div className="grid grid-cols-2 gap-2 pt-2">
             <Button 
               onClick={handleClear} 
-              className="h-12 text-base" 
+              className="h-10 text-base" 
               variant="destructive"
               aria-label="مسح جميع الورديات"
             >
@@ -119,7 +119,7 @@ export default function ShiftCalcPage() {
             </Button>
             <Button 
               onClick={handleUndo} 
-              className="h-12 text-base" 
+              className="h-10 text-base" 
               variant="secondary" 
               disabled={history.length === 0}
               aria-label="تراجع عن آخر إضافة"
@@ -135,3 +135,4 @@ export default function ShiftCalcPage() {
     </main>
   );
 }
+
